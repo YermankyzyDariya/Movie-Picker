@@ -1,11 +1,10 @@
 from django.db import models
 from django.conf import settings
 
-User = settings.AUTH_USER_MODEL  # usually 'auth.User'
+User = settings.AUTH_USER_MODEL 
 
 class MovieManager(models.Manager):
     def recent(self):
-        """Return movies ordered by newest year first."""
         return self.get_queryset().order_by('-year')
 
 class Movie(models.Model):
