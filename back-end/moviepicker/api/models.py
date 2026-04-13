@@ -24,12 +24,12 @@ class Movie(models.Model):
 class Review(models.Model):
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE, related_name='reviews')
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reviews')
-    rating = models.PositiveSmallIntegerField()  # 1-10 for example
+    rating = models.PositiveSmallIntegerField()  
     comment = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        unique_together = ('movie', 'user')  # one review per user/movie
+        unique_together = ('movie', 'user') 
 
     def __str__(self):
         return f"Review {self.rating} by {self.user} for {self.movie}"

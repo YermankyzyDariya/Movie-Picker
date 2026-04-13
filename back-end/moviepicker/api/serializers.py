@@ -16,7 +16,6 @@ class ReviewSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-# Serializer (NOT model)
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField()

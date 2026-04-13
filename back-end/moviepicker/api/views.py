@@ -8,7 +8,7 @@ from .models import Movie
 from .serializers import MovieSerializer
 
 
-# ---------------- FBV ---------------- #
+#FBV 
 
 @api_view(['POST'])
 def login_view(request):
@@ -28,7 +28,7 @@ def logout_view(request):
     return Response({'message': 'Logged out'})
 
 
-# ---------------- CBV ---------------- #
+#CBV
 
 class MovieListCreate(APIView):
     permission_classes = [IsAuthenticated]
