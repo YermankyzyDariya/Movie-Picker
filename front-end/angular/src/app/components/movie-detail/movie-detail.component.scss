@@ -1,0 +1,46 @@
+.movie-detail {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background-color: #1a1a1a;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.movie-detail h2 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: greenyellow;
+}
+
+.movie-detail__image {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.movie-detail__description {
+  margin-bottom: 1rem;
+  line-height: 1.4;
+}
+
+.error {
+  color: #ff6b6b;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.movie-img {
+  width: 300px;
+  height: 450px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 20px;
+}
+
+.movie-detail p {
+  font-size: 18px;
+  margin: 8px 0;
+}

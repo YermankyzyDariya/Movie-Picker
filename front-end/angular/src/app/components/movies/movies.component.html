@@ -1,0 +1,14 @@
+<h2>{{ displayGenre || 'Films' }}</h2>
+
+<div class="search">
+  <input [(ngModel)]="searchTerm" placeholder="Search..." />
+  <button (click)="onSearch()">Find</button>
+</div>
+
+<div class="grid">
+  <div class="card" *ngFor="let movie of filteredMovies"
+  [routerLink]="['/movie', movie.id]">
+    <img [src]="movie.image" (error)="movie.image='https://via.placeholder.com/200x300?text=No+Image'"/>
+    <h3>{{ movie.title }}</h3>
+  </div>
+</div>

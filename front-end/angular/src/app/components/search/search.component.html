@@ -1,0 +1,6 @@
+<div class="search">
+  <h2>Результаты поиска «{{ query }}»</h2>
+  <div *ngIf="loading">Загрузка...</div>
+  <div *ngIf="!loading && results.length === 0">Ничего не найдено</div>
+  <app-movie-list *ngIf="!loading && results.length > 0" [movies]="results"></app-movie-list>
+</div>

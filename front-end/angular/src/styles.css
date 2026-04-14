@@ -1,1 +1,15 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+  margin: 0;
+  font-family: 'Inter', 'Segoe UI', sans-serif;
+  background: #0f0f0f;
+  color: white;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRooH3lxriRRgu81Yp49xlPylT09xbfSg6C6Q&s') center/cover no-repeat;
+  opacity: 0.15;
+  z-index: -1;
+}
