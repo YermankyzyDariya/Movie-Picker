@@ -4,10 +4,18 @@ from .models import Movie, Review
 
 
 class MovieSerializer(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField()
+
     class Meta:
         model = Movie
         fields = '__all__'
         read_only_fields = ['created_by', 'created_at']
+
+    def get_image(self, obj):
+        request = self.context.get('request')
+        if obj.image and request:
+            return request.build_absolute_uri(obj.image.url)
+        return None
 
 
 class ReviewSerializer(serializers.ModelSerializer):

@@ -5,6 +5,7 @@ from .models import Movie, Review, Watchlist, Profile
 class MovieAdmin(admin.ModelAdmin):
     list_display = ('title', 'year', 'created_by', 'created_at')
     search_fields = ('title', 'genre')
+    fields = ('title', 'description', 'genre', 'year', 'image', 'created_by')
 
 @admin.register(Review)
 class ReviewAdmin(admin.ModelAdmin):
