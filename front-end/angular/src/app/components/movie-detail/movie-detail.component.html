@@ -1,0 +1,15 @@
+<div class="movie-detail" *ngIf="movie">
+
+  <h1>{{ movie.title }}</h1>
+
+  <img 
+    [src]="movie.image || 'https://via.placeholder.com/300x450'" 
+    alt="{{ movie.title }}"
+    class="movie-img"
+  />
+
+  <p><b>Genre:</b> {{ movie.genre }}</p>
+  <p><b>Year:</b> {{ movie['year'] }}</p> 
+  <p><b>Description:</b> {{ movie.description }}</p>
+
+</div>

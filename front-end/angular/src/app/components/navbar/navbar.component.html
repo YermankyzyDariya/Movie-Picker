@@ -1,0 +1,23 @@
+<nav class="navbar">
+  <div class="navbar__logo" (click)="router.navigate(['/'])">
+    <span class="logo-text">КиноПоиск</span>
+  </div>
+
+  <ul class="navbar__links">
+    <li><a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">Главное</a></li>
+    <a routerLink="/movies">Все</a>
+    <a routerLink="/movies/Action">Боевики</a>
+    <a routerLink="/movies/Drama">Драма</a>
+    <a routerLink="/movies/Romance">Романтика</a>
+    <a routerLink="/movies/Sci-Fi">Научная фантастика</a>
+    <a routerLink="/movies/Fantasy">Фэнтези</a>
+    <a routerLink="/movies/Animation">Анимация</a>
+  </ul>
+
+  
+
+  <div class="navbar__auth">
+    <button *ngIf="!authService.isLoggedIn()" routerLink="/login">Войти</button>
+    <button *ngIf="authService.isLoggedIn()" (click)="logout()">Выйти</button>
+  </div>
+</nav>

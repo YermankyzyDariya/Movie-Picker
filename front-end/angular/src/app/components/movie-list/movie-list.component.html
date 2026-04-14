@@ -1,0 +1,15 @@
+<div class="movie-list">
+  <div
+    class="movie-card"
+    *ngFor="let movie of movies"
+    (click)="openMovie(movie)"
+  >
+    <img
+      *ngIf="movie.imageUrl"
+      [src]="movie.imageUrl"
+      [alt]="movie.title"
+      class="movie-card__image"
+    />
+    <div class="movie-card__title">{{ movie.title }}</div>
+  </div>
+</div>
