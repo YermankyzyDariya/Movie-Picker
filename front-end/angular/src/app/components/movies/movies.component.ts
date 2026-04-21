@@ -31,20 +31,20 @@ export class MoviesComponent implements OnInit {
   selectedMovie: any = null;
 
   genreMap: { [key: number]: string } = {
-    28: 'Action',
-    18: 'Drama',
-    10749: 'Romance',
-    878: 'Sci-Fi',
-    14: 'Fantasy',
-    16: 'Animation',
-    36: 'History',
-    10402: 'Music',
-    10751: 'Family',
-    27: 'Horror',
-    80: 'Crime',
-    35: 'Comedy',
-    53: 'Thriller',
-    12: 'Adventure'
+    35: 'Action',
+    33: 'Drama',
+    38: 'Romance',
+    36: 'Sci-Fi',
+    41: 'Fantasy',
+    39: 'Animation',
+    43: 'History',
+    45: 'Music',
+    40: 'Family',
+    46: 'Horror',
+    42: 'Crime',
+    34: 'Comedy',
+    37: 'Thriller',
+    44: 'Adventure'
   };
 
   genres: string[] = [
@@ -72,7 +72,6 @@ export class MoviesComponent implements OnInit {
   this.router.events
     .pipe(filter(e => e instanceof NavigationEnd))
     .subscribe(() => {
-      this.resetFilters();
       this.selectedMovie = null;
       this.showSimilar = false;
       this.loadMovies();
@@ -88,31 +87,46 @@ export class MoviesComponent implements OnInit {
           return name?.toLowerCase().includes(genre.toLowerCase());
         })
       );
-    }
-  });
-}
+    } else {
+      this.filteredMovies = this.movies;
+      }
+    });
+  }
+
+  filterMovies() {
+    this.filteredMovies = this.movies.filter(movie => {
+      const matchesSearch = movie.title.toLowerCase().includes(this.searchTerm.toLowerCase());
+      const matchesGenre = this.selectedGenres.length === 0 || movie.genres?.some((id: number) => 
+        this.selectedGenres.includes(this.genreMap[id])
+      );
+      return matchesSearch && matchesGenre;
+      });
+  }
 
   loadMovies() {
     this.http.get<any[]>('http://127.0.0.1:8000/api/movies/')
       .subscribe(data => {
         this.movies = data;
         this.filteredMovies = data;
+
+      this.route.params.subscribe(params => { 
+        const genre = params['genre'];
+
+        if (genre) {
+          this.filteredMovies = this.movies.filter(movie =>
+            movie.genres?.some((id: number) => 
+              this.genreMap[id]?.toLowerCase() === genre.toLowerCase()
+            )
+          );
+        } else {
+          this.filteredMovies = this.movies;
+        }
+      });
       });
   }
 
-  resetFilters() {
-    this.selectedGenres = [];
-    this.selectedMovies = [];
-    this.searchTerm = '';
-  }
-
-  toggleGenre(genre: string) {
-    if (this.selectedGenres.includes(genre)) {
-      this.selectedGenres = this.selectedGenres.filter(g => g !== genre);
-    } else {
-      this.selectedGenres.push(genre);
-    }
-    this.applyFilters();
+  goToMovie(id: number) {
+    this.router.navigate(['/movie', id]);
   }
 
   toggleMovie(id: number) {
@@ -127,7 +141,18 @@ export class MoviesComponent implements OnInit {
       }
     }
   }
+  toggleGenre(genre: string) {
+    if (this.selectedGenres.includes(genre)) {
+      this.selectedGenres = this.selectedGenres.filter(g => g !== genre);
+    } else {
+      this.selectedGenres.push(genre);
+    }
+    this.filterMovies();
+  } 
 
+  goToGenre(genre: string) {
+      window.location.href = `/genre/${genre}`;
+  }
   openMovie(movie: any) {
     this.selectedMovie = movie;
   }
@@ -136,48 +161,13 @@ export class MoviesComponent implements OnInit {
     this.selectedMovie = null;
   }
 
-  applyFilters() {
-  this.filteredMovies = this.movies.filter(movie => {
-
-    const matchesSearch =
-      movie.title.toLowerCase().includes(this.searchTerm.toLowerCase());
-
-    const matchesGenre =
-      this.selectedGenres.length === 0 ||
-      movie.genres?.some((g: any) => {
-        const name = typeof g === 'string' ? g : g?.name;
-        return this.selectedGenres.includes(name);
-      });
-
-    return matchesSearch && matchesGenre;
-  });
-}
+  onInput(event: any) {
+    this.searchTerm = event.target.value;
+  }
 
   onSearch() {
-    this.showSimilar = false;
-    this.applyFilters();
+    this.filterMovies();
   }
-
-  findSimilar() {
-  if (this.selectedMovies.length !== 2) {
-    alert('Select exactly 2 movies');
-    return;
-  }
-
-  this.showSimilar = true;
-
-  this.http.post<any[]>(
-    'http://127.0.0.1:8000/api/movies/similar/',
-    { movies: this.selectedMovies }
-  ).subscribe({
-    next: (data) => {
-      this.filteredMovies = data;
-    },
-    error: () => {
-      this.errorMessage = 'Failed to load similar movies';
-    }
-  });
-}
 
   fixImage(url: string): string {
     if (!url) return '';
@@ -189,7 +179,6 @@ export class MoviesComponent implements OnInit {
     if (!genres || genres.length === 0) {
       return 'No genres';
     }
-
     const names = genres
       .map((g: any) => {
         if (!g) return '';
@@ -200,5 +189,24 @@ export class MoviesComponent implements OnInit {
       .filter((g: string) => g.trim() !== '');
 
     return names.length ? names.join(', ') : 'No genres';
+  }
+  getMovies() {
+    const token = localStorage.getItem('token');
+
+    this.http.get<any[]>(
+      'http://127.0.0.1:8000/api/movies/',
+      {
+        headers: {
+          Authorization: `Token ${token}`
+        }
+      }
+    ).subscribe({
+      next: (data) => {
+        console.log('movies', data);
+      },
+      error: (err) => {
+        console.error('Error fetching movies', err);
+      }
+    });
   }
 }

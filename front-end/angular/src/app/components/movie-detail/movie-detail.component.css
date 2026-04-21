@@ -44,3 +44,19 @@
   font-size: 18px;
   margin: 8px 0;
 }
+.detail-container {
+  display: flex;
+  gap: 30px;
+  padding: 40px;
+  color: white;
+  background: #111;
+}
+
+.detail-container img {
+  width: 300px;
+  border-radius: 10px;
+}
+
+.info {
+  max-width: 600px;
+}

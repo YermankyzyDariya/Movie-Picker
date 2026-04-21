@@ -3,10 +3,9 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
+
 @Component({
   selector: 'app-login',
-  standalone: true,
-  imports: [FormsModule, RouterModule],
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
@@ -17,15 +16,24 @@ export class LoginComponent {
   constructor(private http: HttpClient, private router: Router) {}
 
 login() {
-  this.http.post<any>('http://127.0.0.1:8000/api/login/', {
-    username: this.username,
-    password: this.password
-  }).subscribe({
-    next: (res) => {
+  this.http.post<any>(
+    'http://127.0.0.1:8000/api/login/', 
+    {
+     username: this.username,
+     password: this.password
+    },
+    {
+      headers: {
+        'Content-Type': 'application/json'
+      } 
+    }
+  ).subscribe({
+    next: (res: any) => {
+      console.log('login response', res);
       localStorage.setItem('token', res.token);
       this.router.navigate(['/']);
     },
-    error: () => {
+    error: (err) => {
       alert('Login failed');
     }
   });

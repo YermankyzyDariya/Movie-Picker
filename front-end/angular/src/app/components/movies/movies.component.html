@@ -3,49 +3,29 @@
 <div class="genres">
   <button
     *ngFor="let g of genres"
-    (click)="toggleGenre(g)"
+    (click)="goToGenre(g)"
     [class.active]="selectedGenres.includes(g)">
     {{ g }}
   </button>
   </div>
 
-  <div class="controls">
-    <button class="find-btn" (click)="findSimilar()">
-      Find Similar
-    </button>
-
-  <div class="search">
-    <input (input)="onSearch()" placeholder="Search..." />
+  <div class="search-bar">
+    <input (input)="onInput($event)" placeholder="Search..." />
     <button (click)="onSearch()">Find</button>
     </div>
-  </div>
 
-  <h2 *ngIf="showSimilar">
-    Similar Movies
-  </h2>
-
-  <div class="movies-container">
-
+    <div class="movies-container">
     <div 
       class="movie-card"
       *ngFor="let movie of filteredMovies"
-      (click)="openMovie(movie)"
+      (click)="goToMovie(movie.id)"
     >
     <img [src]="fixImage(movie.image)" />
     
     <div class="movie-info">
       <h3>{{ movie.title }}</h3>
-
-      <button 
-        class="select-btn"
-        (click)="toggleMovie(movie.id); $event.stopPropagation()"
-        [class.selected]="selectedMovies.includes(movie.id)">
-        {{ selectedMovies.includes(movie.id) ? 'Selected' : 'Select' }}
-      </button>
-
       </div>
-    </div>
-  </div>
+      </div>
 
   <div *ngIf="selectedMovie" class="movie-details">
     <button class="close-btn" (click)="closeMovie()">x</button>
@@ -56,12 +36,4 @@
       <p><b>Genres:</b> {{ getGenres(selectedMovie.genres) }}</p>
       <p><b>Description:</b> {{ selectedMovie.description }}</p>
       </div>
-  </div>
-
-  <div *ngIf="errorMessage" class="error">
-    {{ errorMessage }}
-  </div>
-
-  <div *ngIf="!errorMessage && filteredMovies.length === 0" class="empty">
-    No movies found
   </div>

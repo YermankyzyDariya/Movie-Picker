@@ -15,6 +15,7 @@ import { MoviesComponent } from './components/movies/movies.component';
 
 @NgModule({
   declarations: [
+    LoginComponent,
     MoviesComponent,
     AppComponent,
     MovieListComponent,
@@ -27,7 +28,6 @@ import { MoviesComponent } from './components/movies/movies.component';
     HttpClientModule,
     AppRoutingModule,
     HeaderComponent,
-    LoginComponent
   ],
   providers: [
     {
