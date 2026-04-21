@@ -10,7 +10,7 @@ import { Movie } from '../models/movie';
 export class MovieService {
   private readonly baseUrl = `${environment.apiUrl}movies/`;
 
-  private token = '596d07a1dc9a9e62c8d4ac66bbb1cee0801468f9';
+  private token = '531b59344a94fb813ac37ec8444aee4cb42ed01c';
 
   private headers = new HttpHeaders({
     Authorization: `Token ${this.token}`
@@ -19,11 +19,16 @@ export class MovieService {
   constructor(private http: HttpClient) {}
 
   getMovies() {
-  return this.http.get<any[]>('http://127.0.0.1:8000/api/movies/', {
-    headers: {
-      Authorization: `Token ${this.token}`
+  const token = localStorage.getItem('token');
+
+  return this.http.get<any[]>(
+    'http://127.0.0.1:8000/api/movies/',
+    {
+      headers: {
+        Authorization: `Token ${token}`
+      }
     }
-  });
+  );
 }
   getMovie(id: number): Observable<Movie> {
     return this.http.get<Movie>(`${this.baseUrl}${id}/`, { headers: new HttpHeaders({

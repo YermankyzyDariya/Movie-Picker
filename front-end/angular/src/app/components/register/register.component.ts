@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
   standalone: true,
   imports: [FormsModule, RouterModule],
+  providers: [HttpClient],
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
@@ -14,15 +16,24 @@ export class RegisterComponent {
   password = '';
   confirmPassword = '';
 
-  constructor(private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
-  register() {
-    console.log('Register clicked');
-    console.log('Username:', this.username);
-    console.log('Password:', this.password);
-    console.log('Confirm password:', this.confirmPassword);
-
-    alert('Registration form submitted');
-    this.router.navigate(['/login']);
+  rregister() {
+  if (this.password !== this.confirmPassword) {
+    alert('Passwords do not match');
+    return;
   }
+
+  this.http.post('http://127.0.0.1:8000/api/register/', {
+    username: this.username,
+    password: this.password
+  }).subscribe({
+    next: () => {
+      this.router.navigate(['/login']);
+    },
+    error: () => {
+      alert('Registration failed');
+    }
+  });
+}
 }

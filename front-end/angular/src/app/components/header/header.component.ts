@@ -24,4 +24,11 @@ export class HeaderComponent {
   onSearch() {
     console.log('search clicked');
   }
+  logout() {
+    localStorage.removeItem('token');
+    this.router.navigate(['/login']);
+  }
+  isLoggedIn(): boolean {
+    return !!localStorage.getItem('token');
+  }
 }

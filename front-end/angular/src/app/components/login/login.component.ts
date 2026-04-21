@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -13,14 +14,20 @@ export class LoginComponent {
   username = '';
   password = '';
 
-  constructor(private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
-  login() {
-    console.log('Login clicked');
-    console.log('Username:', this.username);
-    console.log('Password:', this.password);
-
-    alert('Login form submitted');
-    this.router.navigate(['/movies']);
+login() {
+  this.http.post<any>('http://127.0.0.1:8000/api/login/', {
+    username: this.username,
+    password: this.password
+  }).subscribe({
+    next: (res) => {
+      localStorage.setItem('token', res.token);
+      this.router.navigate(['/']);
+    },
+    error: () => {
+      alert('Login failed');
+    }
+  });
   }
 }

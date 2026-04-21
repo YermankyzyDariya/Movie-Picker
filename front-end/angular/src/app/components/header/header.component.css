@@ -3,45 +3,39 @@
   justify-content: space-between;
   align-items: center;
   background: black;
-  color: white;
-  padding: 10px 20px;
+  padding: 15px 40px;
 }
 
-.links a {
-  margin: 0 10px;
+.left {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.logo {
+  color: white;
+  font-size: 28px;
+  margin: 0;
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+}
+
+.nav-link {
   color: white;
   text-decoration: none;
+  font-size: 16px;
   cursor: pointer;
 }
 
-.links a:hover {
-  color: greenyellow;
-}
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px 40px;
-  background: rgba(10, 10, 10, 0.9);
-  backdrop-filter: blur(10px);
-}
-
-header a {
-  color: #ccc;
-  text-decoration: none;
-  margin: 0 10px;
-  transition: 0.2s;
-}
-
-header a:hover {
+.nav-link:hover {
   color: greenyellow;
 }
 
-header a.active {
-  color: greenyellow;
-}
 .auth-buttons {
-  margin-left: auto;
   display: flex;
   gap: 15px;
 }
@@ -49,12 +43,18 @@ header a.active {
 .auth-buttons a {
   color: white;
   text-decoration: none;
-  padding: 6px 14px;
-  border-radius: 6px;
-  background: rgba(255,255,255,0.1);
-  transition: 0.3s;
 }
 
-.auth-buttons a:hover {
-  background: #0a871c;
+.btn {
+  padding: 6px 14px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.1);
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: greenyellow;
+  color: black;
 }

@@ -1,14 +1,67 @@
-<h2>{{ displayGenre || 'Films' }}</h2>
+<h2>Films</h2>
 
-<div class="search">
-  <input [(ngModel)]="searchTerm" placeholder="Search..." />
-  <button (click)="onSearch()">Find</button>
-</div>
-
-<div class="grid">
-  <div class="card" *ngFor="let movie of filteredMovies"
-  [routerLink]="['/movie', movie.id]">
-    <img [src]="movie.image" (error)="movie.image='https://via.placeholder.com/200x300?text=No+Image'"/>
-    <h3>{{ movie.title }}</h3>
+<div class="genres">
+  <button
+    *ngFor="let g of genres"
+    (click)="toggleGenre(g)"
+    [class.active]="selectedGenres.includes(g)">
+    {{ g }}
+  </button>
   </div>
-</div>
+
+  <div class="controls">
+    <button class="find-btn" (click)="findSimilar()">
+      Find Similar
+    </button>
+
+  <div class="search">
+    <input (input)="onSearch()" placeholder="Search..." />
+    <button (click)="onSearch()">Find</button>
+    </div>
+  </div>
+
+  <h2 *ngIf="showSimilar">
+    Similar Movies
+  </h2>
+
+  <div class="movies-container">
+
+    <div 
+      class="movie-card"
+      *ngFor="let movie of filteredMovies"
+      (click)="openMovie(movie)"
+    >
+    <img [src]="fixImage(movie.image)" />
+    
+    <div class="movie-info">
+      <h3>{{ movie.title }}</h3>
+
+      <button 
+        class="select-btn"
+        (click)="toggleMovie(movie.id); $event.stopPropagation()"
+        [class.selected]="selectedMovies.includes(movie.id)">
+        {{ selectedMovies.includes(movie.id) ? 'Selected' : 'Select' }}
+      </button>
+
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="selectedMovie" class="movie-details">
+    <button class="close-btn" (click)="closeMovie()">x</button>
+    <img [src]="fixImage(selectedMovie.image)" />
+
+    <div class="info">
+      <h2>{{ selectedMovie.title }}</h2>
+      <p><b>Genres:</b> {{ getGenres(selectedMovie.genres) }}</p>
+      <p><b>Description:</b> {{ selectedMovie.description }}</p>
+      </div>
+  </div>
+
+  <div *ngIf="errorMessage" class="error">
+    {{ errorMessage }}
+  </div>
+
+  <div *ngIf="!errorMessage && filteredMovies.length === 0" class="empty">
+    No movies found
+  </div>
