@@ -1,21 +1,35 @@
-<h2>Profile</h2>
+<div class="profile-page">
+  <h2 class="profile-title">Profile</h2>
 
-<div *ngIf="loading">Loading...</div>
+  <div *ngIf="loading" class="loading">
+    Loading...
+  </div>
 
-<div *ngIf="profile">
-  <p *ngIf="profile"><b>User:</b> {{ profile?.user }}</p>
+  <div *ngIf="profile" class="profile-card">
 
-  <label>Bio:</label>
-  <input 
-    [value]="profile?.bio"
-    (input)="onBioChange($event)" 
-    />
+    <div class="profile-info">
+      <p><b>User:</b> {{ profile?.user }}</p>
+    </div>
 
-  <label>Favorite genre:</label>
-  <input 
-    [value]="profile.favorite_genre"
-    (input)="onGenreChange($event)"
-   />
+    <div class="profile-field">
+      <label>Bio:</label>
+      <input 
+        [value]="profile?.bio"
+        (input)="onBioChange($event)"
+      />
+    </div>
 
-  <button (click)="save()">Save</button>
+    <div class="profile-field">
+      <label>Favorite genre:</label>
+      <input 
+        [value]="profile?.favorite_genre"
+        (input)="onGenreChange($event)"
+      />
+    </div>
+
+    <button class="save-btn" (click)="save()">
+      Save
+    </button>
+
+  </div>
 </div>

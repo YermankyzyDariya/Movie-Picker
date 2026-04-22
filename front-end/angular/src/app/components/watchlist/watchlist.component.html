@@ -1,14 +1,35 @@
-<h2>Watchlist</h2>
+<div class="watchlist-page">
+  <h2 class="watchlist-title">Watchlist</h2>
 
-<input type="number" placeholder="Movie ID" 
-    [value]="movieId"
-    (input)="onMovieIdChange($event)"
+  <div class="watchlist-form">
+    <input 
+      type="number"
+      placeholder="Movie ID"
+      [value]="movieId"
+      (input)="onMovieIdChange($event)"
     />
-<button (click)="add()">Add</button>
+    <button (click)="add()">Add</button>
+  </div>
 
-<ul>
-  <li *ngFor="let w of items">
-    Movie: {{ w.movie }}
-    <button (click)="remove(w.id)">Remove</button>
-  </li>
-</ul>
+  <div class="watchlist-grid">
+    <div class="movie-card" *ngFor="let w of items">
+
+      <img 
+        class="movie-poster"
+        src="https://via.placeholder.com/200x300"
+        alt="movie"
+      />
+
+      <div class="movie-info">
+        <div class="movie-title">
+          Movie ID: {{ w.movie }}
+        </div>
+
+        <button class="remove-btn" (click)="remove(w.id)">
+          Remove
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>

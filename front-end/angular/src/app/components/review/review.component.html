@@ -1,21 +1,49 @@
-<h2>Reviews</h2>
+<div class="review-page">
+  <h2 class="review-title">Reviews</h2>
 
-<div>
-  <input type="number" placeholder="Movie ID" 
-        [value]="movieId"
-        (input)="onMovieIdChange($event)" />
-  <input type="number" 
-        [value]="rating"
-        min="1" max="5"
-        (input)="onRatingChange($event)" />
-  <input placeholder="Comment" 
-        [value]="comment"
-        (input)="onCommentChange" />
-  <button (click)="add()">Add</button>
+  <div class="review-form">
+    <input 
+      type="number"
+      placeholder="Movie ID"
+      [value]="movieId"
+      (input)="onMovieIdChange($event)"
+    />
+
+    <input 
+      type="number"
+      [value]="rating"
+      min="1"
+      max="5"
+      placeholder="Rating"
+      (input)="onRatingChange($event)"
+    />
+
+    <input 
+      placeholder="Comment"
+      [value]="comment"
+      (input)="onCommentChange($event)"
+    />
+
+    <button (click)="add()">Add</button>
+  </div>
+
+  <div class="review-list">
+    <div class="review-card" *ngFor="let r of reviews">
+
+      <div class="review-header">
+        <span class="review-movie">
+          Movie: {{ r.movie }}
+        </span>
+
+        <span class="review-rating">
+          ⭐ {{ r.rating }}
+        </span>
+      </div>
+
+      <div class="review-text">
+        {{ r.comment }}
+      </div>
+
+    </div>
+  </div>
 </div>
-
-<ul>
-  <li *ngFor="let r of reviews">
-    Movie: {{ r.movie }} | Rating: {{ r.rating }} | {{ r.comment }}
-  </li>
-</ul>
