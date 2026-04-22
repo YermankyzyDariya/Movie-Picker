@@ -6,7 +6,7 @@ import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private readonly tokenKey = 'authToken';
+  private readonly tokenKey = 'token';
 
   constructor(private http: HttpClient) {}
 

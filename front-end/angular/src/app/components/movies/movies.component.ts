@@ -23,12 +23,6 @@ export class MoviesComponent implements OnInit {
 
   showSimilar: boolean = false;
 
-  genreList: string[] = [
-    'Action','Drama','Romance','Sci-Fi','Fantasy',
-    'Animation','History','Music','Family','Horror',
-    'Crime','Comedy','Thriller','Adventure'
-  ];
-
   selectedMovie: any = null;
 
   genreMap: { [key: number]: string } = {
