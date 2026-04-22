@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-movies',
@@ -150,6 +151,19 @@ export class MoviesComponent implements OnInit {
     this.filterMovies();
   } 
 
+  toggleSelection(id: number) {
+      if (this.selectedMovies.includes(id)) {
+        this.selectedMovies = this.selectedMovies.filter(m => m !== id);
+      } else {
+      if (this.selectedMovies.length < 2) {
+        this.selectedMovies.push(id);
+     } else {
+        alert('You can select only 2 movies');
+        }
+      }
+    }
+  
+
   goToGenre(genre: string) {
       window.location.href = `/genre/${genre}`;
   }
@@ -163,10 +177,6 @@ export class MoviesComponent implements OnInit {
 
   onInput(event: any) {
     this.searchTerm = event.target.value;
-  }
-
-  onSearch() {
-    this.filterMovies();
   }
 
   fixImage(url: string): string {
@@ -206,6 +216,49 @@ export class MoviesComponent implements OnInit {
       },
       error: (err) => {
         console.error('Error fetching movies', err);
+      }
+    });
+  }
+
+  findSimilar() {
+    const token = localStorage.getItem('token');
+
+    this.http.post<any[]>(
+      'http://127.0.0.1:8000/api/similar/',
+      {
+        movie_ids: this.selectedMovies
+      },
+      {
+        headers: {
+          Authorization: `Token ${token}`
+        }
+      }
+    ).subscribe({
+      next: (data) => {
+        console.log('similar movies', data);
+        this.movies = data;
+      },
+      error: (err) => {
+        console.error('error', err);
+      }
+    });
+  }
+
+  onSearch() {
+    const token = localStorage.getItem('token');
+    this.http.get<any[]>( `http://127.0.0.1:8000/api/movies/search/?q=${this.searchTerm}`,
+      {
+        headers: {
+          Authorization: `Token ${token}`
+        }
+      }
+    ).subscribe({
+      next: (data) => {
+        console.log('search results', data);
+        this.filteredMovies = data;
+      },
+      error: (err) => {
+        console.error('error', err);
       }
     });
   }

@@ -4,36 +4,57 @@
   <button
     *ngFor="let g of genres"
     (click)="goToGenre(g)"
-    [class.active]="selectedGenres.includes(g)">
+    [class.active]="selectedGenres.includes(g)"
+  >
     {{ g }}
   </button>
-  </div>
+</div>
 
   <div class="search-bar">
     <input (input)="onInput($event)" placeholder="Search..." />
     <button (click)="onSearch()">Find</button>
-    </div>
+  </div>
 
-    <div class="movies-container">
+  <div class="movies-container">
+
     <div 
       class="movie-card"
       *ngFor="let movie of filteredMovies"
       (click)="goToMovie(movie.id)"
     >
+
+  <label class="custom-checkbox" (click)="$event.stopPropagation()">
+    <input
+      type="checkbox"
+      class="select-checkbox"
+      [checked]="selectedMovies.includes(movie.id)"
+      [disabled]="!selectedMovies.includes(movie.id) && selectedMovies.length >= 2"
+      (click)="$event.stopPropagation()"
+      (change)="toggleSelection(movie.id)"
+    />
+    <span class="checkmark"></span>
+    </label>
+
     <img [src]="fixImage(movie.image)" />
-    
+
     <div class="movie-info">
-      <h3>{{ movie.title }}</h3>
+        <h3>{{ movie.title }}</h3>
       </div>
-      </div>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="find-similar-btn" (click)="findSimilar()">Find Similar</button>
+  </div>
 
   <div *ngIf="selectedMovie" class="movie-details">
     <button class="close-btn" (click)="closeMovie()">x</button>
+
     <img [src]="fixImage(selectedMovie.image)" />
 
     <div class="info">
       <h2>{{ selectedMovie.title }}</h2>
       <p><b>Genres:</b> {{ getGenres(selectedMovie.genres) }}</p>
       <p><b>Description:</b> {{ selectedMovie.description }}</p>
-      </div>
+    </div>
   </div>
