@@ -1,0 +1,21 @@
+<h2>Profile</h2>
+
+<div *ngIf="loading">Loading...</div>
+
+<div *ngIf="profile">
+  <p *ngIf="profile"><b>User:</b> {{ profile?.user }}</p>
+
+  <label>Bio:</label>
+  <input 
+    [value]="profile?.bio"
+    (input)="onBioChange($event)" 
+    />
+
+  <label>Favorite genre:</label>
+  <input 
+    [value]="profile.favorite_genre"
+    (input)="onGenreChange($event)"
+   />
+
+  <button (click)="save()">Save</button>
+</div>

@@ -1,0 +1,21 @@
+<h2>Reviews</h2>
+
+<div>
+  <input type="number" placeholder="Movie ID" 
+        [value]="movieId"
+        (input)="onMovieIdChange($event)" />
+  <input type="number" 
+        [value]="rating"
+        min="1" max="5"
+        (input)="onRatingChange($event)" />
+  <input placeholder="Comment" 
+        [value]="comment"
+        (input)="onCommentChange" />
+  <button (click)="add()">Add</button>
+</div>
+
+<ul>
+  <li *ngFor="let r of reviews">
+    Movie: {{ r.movie }} | Rating: {{ r.rating }} | {{ r.comment }}
+  </li>
+</ul>

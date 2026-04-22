@@ -18,7 +18,7 @@ export class RegisterComponent {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  rregister() {
+  register() {
   if (this.password !== this.confirmPassword) {
     alert('Passwords do not match');
     return;

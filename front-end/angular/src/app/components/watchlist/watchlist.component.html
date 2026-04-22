@@ -1,0 +1,14 @@
+<h2>Watchlist</h2>
+
+<input type="number" placeholder="Movie ID" 
+    [value]="movieId"
+    (input)="onMovieIdChange($event)"
+    />
+<button (click)="add()">Add</button>
+
+<ul>
+  <li *ngFor="let w of items">
+    Movie: {{ w.movie }}
+    <button (click)="remove(w.id)">Remove</button>
+  </li>
+</ul>
